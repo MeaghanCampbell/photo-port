@@ -104,14 +104,25 @@ const PhotoList = ({ category }) => {
 // going through each photo in photos array and trying to find every photo that matches the category that was selected by the user then return it
   const currentPhotos = photos.filter((photo) => photo.category === category);
 
+  // use state hook to manage the current photo state and make this data accessable to the Modal component through props
+  const [currentPhoto, setCurrentPhoto] = useState()
+
+  // hook to conditionally render modal so we don't get an error
+  // set initial state to false cause we don't want the modal to open until the user has clicked
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   const toggleModal = (image, i) => {
-    // current photo
+    // update current photo state and retrieved data through the click event
+    setCurrentPhoto({...image, index: i})
+    setIsModalOpen(true)
   }
 
   return (
     <div>
       <div className="flex-row">
-        <Modal />
+        {/* pass currentPhoto as a prop to Modal becuase it now contains data points needed for the modal from the toggleModal function */}
+        {/* also conditionally render only when isModalOpen is true */}
+        {isModalOpen && <Modal currentPhoto={currentPhoto}/>}
         {currentPhotos.map((image, i) => (
           <img
             src={require(`../../assets/small/${category}/${i}.jpg`).default}
