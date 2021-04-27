@@ -114,7 +114,8 @@ const PhotoList = ({ category }) => {
   const toggleModal = (image, i) => {
     // update current photo state and retrieved data through the click event
     setCurrentPhoto({...image, index: i})
-    setIsModalOpen(true)
+    // when toggleModal, the value of isModalOpen is toggled from true to false
+    setIsModalOpen(!isModalOpen)
   }
 
   return (
@@ -122,7 +123,7 @@ const PhotoList = ({ category }) => {
       <div className="flex-row">
         {/* pass currentPhoto as a prop to Modal becuase it now contains data points needed for the modal from the toggleModal function */}
         {/* also conditionally render only when isModalOpen is true */}
-        {isModalOpen && <Modal currentPhoto={currentPhoto}/>}
+        {isModalOpen && <Modal currentPhoto={currentPhoto} onClose={toggleModal}/>}
         {currentPhotos.map((image, i) => (
           <img
             src={require(`../../assets/small/${category}/${i}.jpg`).default}
