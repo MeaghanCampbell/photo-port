@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Modal from '../Modal'
 
 const PhotoList = ({ category }) => {
 
@@ -103,14 +104,20 @@ const PhotoList = ({ category }) => {
 // going through each photo in photos array and trying to find every photo that matches the category that was selected by the user then return it
   const currentPhotos = photos.filter((photo) => photo.category === category);
 
+  const toggleModal = (image, i) => {
+    // current photo
+  }
+
   return (
     <div>
       <div className="flex-row">
+        <Modal />
         {currentPhotos.map((image, i) => (
           <img
             src={require(`../../assets/small/${category}/${i}.jpg`).default}
             alt={image.name}
             className="img-thumbnail mx-1"
+            onClick={() => toggleModal(image, i)}
             key={image.name}
           />
         ))}
